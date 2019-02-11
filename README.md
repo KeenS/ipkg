@@ -39,4 +39,4 @@ $ ipkg test
 
 * [x] help message
 * [ ] CLI options
-* [ ] VSC collaboration (e.g. get author name)
+* [ ] VCS collaboration (e.g. get author name)
