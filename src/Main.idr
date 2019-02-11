@@ -1,8 +1,11 @@
 module Main
 
 data DirTemplate = File String String | Dir String (List DirTemplate)
-data Config : Type where
-  MkConfig : (name: String) -> Config
+
+data Command : Type where
+  New : (name : String) -> Command
+  Help : Command
+  Unknown : Command
 
 printError : FileError -> IO ()
 printError err = printLn err
@@ -19,8 +22,8 @@ where
         Right () => inner dir tmpl
         Left err => pure <$> printError err) result children
 
-binProjectTemplate : Config -> DirTemplate
-binProjectTemplate (MkConfig name) = Dir name [
+binProjectTemplate : String -> DirTemplate
+binProjectTemplate name = Dir name [
   File (name ++ ".ipkg") ("package " ++ name ++ "
 
 version = \"0.1.0\"
@@ -40,14 +43,34 @@ main = putStrLn \"Hello, World\"
   ]
 ]
 
-createProject : Config -> IO (Either FileError ())
-createProject config = interpretTemplate $ binProjectTemplate config
+createProject : String -> IO ()
+createProject name = do
+  result <- interpretTemplate $ binProjectTemplate name
+  case result of
+    Right () => pure ()
+    Left err => printError err
 
+help : String
+help = "
+pkg -- Command line utility for Idris *.ipkg
+
+new NAME   create a new project
+help       print this message
+"
+
+runCommand : Command -> IO ()
+runCommand (New name) = createProject name
+runCommand Help = putStrLn help
+runCommand Unknown = putStrLn help
+
+
+parseArg : List String -> Command
+parseArg ["new", name] = New name
+parseArg ("help" :: _) = Help
+parseArg _ = Unknown
 
 main : IO ()
 main = do
-  (exe :: "new" :: name :: _) <- getArgs | [exe] => pure ()
-  let config = MkConfig name
-  Right () <- createProject config | Left err => printError err
-  pure ()
+  (exe :: args) <- getArgs
+  runCommand $ parseArg args
 
