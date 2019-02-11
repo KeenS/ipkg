@@ -11,6 +11,10 @@ bugtracker = "https://gitlab.com/blackenedgold/ipkg/issues"
 
 sourcedir = src
 modules = Main
+        , Ipkg
+        . Ipkg.Commands
+        , Ipkg.Commands.New
+        , Ipkg.Commands.Help
 main = Main
 executable = "ipkg"
 pkgs = contrib
