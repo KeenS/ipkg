@@ -4,18 +4,21 @@ import Ipkg.Commands
 
 data Command : Type where
   New : (name : String) -> Command
+  Build : Command
   Help : Command
   Unknown : Command
 
 
 runCommand : Command -> IO ()
 runCommand (New name) = Commands.New.perform name
+runCommand Build = Commands.Build.perform
 runCommand Help = Commands.Help.perform
 runCommand Unknown = Commands.Help.perform
 
 
 parseArg : List String -> Command
 parseArg ["new", name] = New name
+parseArg ["build"] = Build
 parseArg ("help" :: _) = Help
 parseArg _ = Unknown
 
