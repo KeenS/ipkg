@@ -1,4 +1,4 @@
-module Ipkg.Commands.Build
+module Ipkg.Commands.Clean
 
 import Ipkg.Files
 import System
@@ -8,5 +8,5 @@ perform: IO ()
 perform = do
   Right ipkgs <- findIpkgsIn "."
   for_ ipkgs $ \ipkg =>
-    system $ "idris --build " ++ ipkg
+    system $ "idris --clean " ++ ipkg
 

@@ -10,6 +10,9 @@ This is a build tool, just a wrapper of `idris` command.
 
 ```console
 $ ipkg new myproject
+$ cd myproject
+$ ipkg build
+$ ipkg test
 ```
 
 
@@ -17,17 +20,23 @@ $ ipkg new myproject
 ## Subcommands
 
 * [ ] new
-* [ ] build
-* [ ] check
-* [ ] clean
-* [ ] test
+  + [x] bin
+  + [ ] lib
+* [x] build
+* [x] check
+* [x] clean
+* [x] test
 * [ ] run
 * [ ] repl
-* [ ] doc
-* [ ] install
-
+* [x] doc
+* [x] install
+* [x] help
+* [ ] module
+  + [ ] add
+  + [ ] rm
+  + [ ] mv
 ## Other
 
-* [ ] help message
+* [x] help message
 * [ ] CLI options
 * [ ] VSC collaboration (e.g. get author name)

@@ -15,7 +15,11 @@ modules = Main
         , Ipkg.Commands
         , Ipkg.Commands.New
         , Ipkg.Commands.Build
-        , Ipkg.Commands.Help
+        , Ipkg.Commands.Check
+        , Ipkg.Commands.Test
+        , Ipkg.Commands.Doc
+        , Ipkg.Commands.Clean
+        , Ipkg.Commands.Install
 main = Main
 executable = "ipkg"
 pkgs = contrib
